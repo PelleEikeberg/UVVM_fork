@@ -727,7 +727,7 @@ package body func_cov_pkg is
   impure function create_bin_multiple(
     constant contains      : t_cov_bin_type;
     constant set_of_values : integer_vector;
-    constant any_value     : boolean;
+    constant allow_any     : boolean;
     constant proc_call     : string)
   return t_new_bin_array is
     constant C_SET_OF_VALUES_NORMALISED : integer_vector(0 to set_of_values'length-1) := set_of_values;
@@ -735,16 +735,15 @@ package body func_cov_pkg is
     variable v_ret                      : t_new_bin_array(0 to 0);
   begin
     v_ret(0).bin_vector(0).contains  := contains;
-    v_ret(0).bin_vector(0).allow_any := any_value;
-    log(ID_SEQUENCER, "creating bin with any_value := " & to_string(any_value));
+    v_ret(0).bin_vector(0).allow_any := allow_any;
     if C_SET_OF_VALUES_NORMALISED'length <= C_FC_MAX_NUM_BIN_VALUES then
       v_ret(0).bin_vector(0).values(0 to C_SET_OF_VALUES_NORMALISED'length - 1) := C_SET_OF_VALUES_NORMALISED;
       v_ret(0).bin_vector(0).num_values                                         := C_SET_OF_VALUES_NORMALISED'length;
-      v_ret(0).bin_vector(0).allow_any                                          := any_value;
+      v_ret(0).bin_vector(0).allow_any                                          := allow_any;
     else
       v_ret(0).bin_vector(0).values     := C_SET_OF_VALUES_NORMALISED(0 to C_FC_MAX_NUM_BIN_VALUES - 1);
       v_ret(0).bin_vector(0).num_values := C_FC_MAX_NUM_BIN_VALUES;
-      v_ret(0).bin_vector(0).allow_any  := any_value;
+      v_ret(0).bin_vector(0).allow_any  := allow_any;
       alert(TB_WARNING, C_PROC_CALL_NORMALISED & "=> Number of values (" & to_string(C_SET_OF_VALUES_NORMALISED'length) & ") exceeds C_FC_MAX_NUM_BIN_VALUES.\n Increase C_FC_MAX_NUM_BIN_VALUES in adaptations package.", C_TB_SCOPE_DEFAULT);
     end if;
     v_ret(0).num_bins               := 1;
