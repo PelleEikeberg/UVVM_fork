@@ -71,8 +71,10 @@ begin
 
     variable v_bin_idx          : natural := 0;
     variable v_bin_idx2         : natural := 0;
+    variable v_bin_idx3         : natural := 0;
     variable v_invalid_bin_idx  : natural := 0;
     variable v_invalid_bin_idx2 : natural := 0;
+    variable v_invalid_bin_idx3 : natural := 0;
     variable v_vector           : std_logic_vector(1 downto 0);
     variable v_rand             : t_rand;
     variable v_seeds            : t_positive_vector(0 to 1);
@@ -495,6 +497,23 @@ begin
       v_invalid_bin_idx2 := 0;
     end procedure;
 
+    -- Overload
+    procedure delete_coverpoint(
+      variable coverpoint1 : inout t_coverpoint;
+      variable coverpoint2 : inout t_coverpoint;
+      variable coverpoint3 : inout t_coverpoint) is
+    begin
+      coverpoint1.delete_coverpoint(VOID);
+      coverpoint2.delete_coverpoint(VOID);
+      coverpoint3.delete_coverpoint(VOID);
+      v_bin_idx          := 0;
+      v_bin_idx2         := 0;
+      v_bin_idx3         := 0;
+      v_invalid_bin_idx  := 0;
+      v_invalid_bin_idx2 := 0;
+      v_invalid_bin_idx3 := 0;
+    end procedure;
+
     procedure load_coverage_db_quiet (
       variable coverpoint       : inout t_coverpoint;
       constant path             : in string;
@@ -708,6 +727,8 @@ begin
       v_coverpoint_a.add_bins(bin_transition((430, 431, 432, 433, 434, 435, 436, 437, 438, 439, 440))); -- C_FC_MAX_NUM_BIN_VALUES = 10
       v_coverpoint_b.add_bins(bin_transition(ANY, 3)); -- any value with 3 transitions should get a hit
       v_coverpoint_b.add_bins(bin_transition(ANY, 4)); -- any value with 4 transitions should get a hit
+      v_coverpoint_c.add_bins(bin_transition(ANY, 2), 1, 1, true); -- any value with 2 transitions should get a hit (allow overlap)
+      v_coverpoint_c.add_bins(bin_transition((441,442,441)), 1, 1, true); -- allow overlap
 
       check_bin(v_coverpoint_a, v_bin_idx, TRN, (401, 403, 401));
       check_bin(v_coverpoint_a, v_bin_idx, TRN, (401, 403, 401, 409));
@@ -716,6 +737,8 @@ begin
       check_bin(v_coverpoint_a, v_bin_idx, TRN, (430, 431, 432, 433, 434, 435, 436, 437, 438, 439));
       check_bin(v_coverpoint_b, v_bin_idx2, TRN, (1, 1, 1));
       check_bin(v_coverpoint_b, v_bin_idx2, TRN, (1, 1, 1, 1));
+      check_bin(v_coverpoint_c, v_bin_idx3, TRN, (1, 1), rand_weight => 1);
+      check_bin(v_coverpoint_c, v_bin_idx3, TRN, (441,442,441), rand_weight => 1);
 
       sample_bins(v_coverpoint_a, (401, 403, 401, 409), 2);
       sample_bins(v_coverpoint_a, (401, 403, 401, 403, 401, 409), 2);
@@ -727,11 +750,13 @@ begin
       sample_bins(v_coverpoint_a, (410, 410, 410, 418, 415, 414, 410), 1); -- Sample values outside bins
       sample_bins(v_coverpoint_a, (420, 421, 422, 423, 424, 425, 426, 427, 428, 430), 1); -- Sample values outside bins
       sample_bins(v_coverpoint_a, (430, 431, 432, 433, 434, 435, 436, 437, 438, 440), 1); -- Sample values outside bins
-      sample_bins(v_coverpoint_b, (441, 442, 443, 444), 1);
-      sample_bins(v_coverpoint_b, (445, 446, 447), 1);
+      sample_bins(v_coverpoint_b, (1, 2, 3, 4), 1);
+      sample_bins(v_coverpoint_b, (5, 6, 7), 1);
+      sample_bins(v_coverpoint_c, (441, 442, 441, 442, 441), 1);
 
       v_bin_idx  := v_bin_idx - 5;
       v_bin_idx2 := v_bin_idx2 - 2;
+      v_bin_idx3 := v_bin_idx3 - 2;
       check_bin(v_coverpoint_a, v_bin_idx, TRN, (401, 403, 401), hits => 12);
       check_bin(v_coverpoint_a, v_bin_idx, TRN, (401, 403, 401, 409), hits => 8);
       check_bin(v_coverpoint_a, v_bin_idx, TRN, (410, 410, 410, 418, 415, 415, 410), hits => 3);
@@ -740,8 +765,10 @@ begin
       -- although we sendt in some random value, the values in the transition(s) is always 1 when using ANY
       check_bin(v_coverpoint_b, v_bin_idx2, TRN, (1, 1, 1), hits => 2); 
       check_bin(v_coverpoint_b, v_bin_idx2, TRN, (1, 1, 1, 1), hits => 1);
+      check_bin(v_coverpoint_c, v_bin_idx3, TRN, (1, 1), rand_weight => 1, hits => 4); 
+      check_bin(v_coverpoint_c, v_bin_idx3, TRN, (441,442,441), rand_weight => 1, hits => 2);
 
-      delete_coverpoint(v_coverpoint_a, v_coverpoint_b);
+      delete_coverpoint(v_coverpoint_a, v_coverpoint_b, v_coverpoint_c);
 
       ------------------------------------------------------------
       log(ID_LOG_HDR, "Testing ignore bins with single values");
@@ -798,6 +825,8 @@ begin
       v_coverpoint_a.add_bins(ignore_bin_transition((2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229, 2230))); -- C_FC_MAX_NUM_BIN_VALUES = 10
       v_coverpoint_b.add_bins(ignore_bin_transition(ANY, 2));
       v_coverpoint_b.add_bins(ignore_bin_transition(ANY, 3));
+      v_coverpoint_c.add_bins(ignore_bin_transition(ANY, 2), 1, 1, true); -- any value with 2 transitions should get a hit (allow overlap)
+      v_coverpoint_c.add_bins(ignore_bin_transition((441,442,441)), 1, 1, true); -- allow overlap
 
 
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_IGNORE, (2201, 2203, 2201));
@@ -806,6 +835,8 @@ begin
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_IGNORE, (2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229));
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_IGNORE, (1, 1));
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_IGNORE, (1, 1, 1));
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_IGNORE, (1, 1));
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_IGNORE, (441,442,441));
 
       sample_bins(v_coverpoint_a, (2201, 2203, 2201, 2209), 2);
       sample_bins(v_coverpoint_a, (2201, 2203, 2201, 2203, 2201, 2209), 2);
@@ -816,17 +847,21 @@ begin
       sample_bins(v_coverpoint_a, (2210, 2210, 2210, 2218, 2215, 2214, 2210), 1); -- Sample values outside bins
       sample_bins(v_coverpoint_a, (2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2230), 1); -- Sample values outside bins
       sample_bins(v_coverpoint_b, (1, 1, 1, 1), 1); -- this will hit ignore_bin_transition(ANY, 2) twice (1,1) & (1,1) and ignore_bin_transition(ANY, 3) once (1,1,1) + "1"
+      sample_bins(v_coverpoint_c, (441, 442, 441, 442, 441), 1);
 
       v_invalid_bin_idx  := v_invalid_bin_idx - 4;
       v_invalid_bin_idx2 := v_invalid_bin_idx2 - 2;
+      v_invalid_bin_idx3 := v_invalid_bin_idx3 - 2;
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_IGNORE, (2201, 2203, 2201), hits => 12);
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_IGNORE, (2201, 2203, 2201, 2209), hits => 8);
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_IGNORE, (2210, 2210, 2210, 2218, 2215, 2215, 2210), hits => 3);
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_IGNORE, (2220, 2221, 2222, 2223, 2224, 2225, 2226, 2227, 2228, 2229), hits => 3);
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_IGNORE, (1, 1), hits => 2);
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_IGNORE, (1, 1, 1), hits => 1);
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_IGNORE, (1, 1), hits => 4); 
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_IGNORE, (441,442,441), hits => 2);
 
-      delete_coverpoint(v_coverpoint_a, v_coverpoint_b);
+      delete_coverpoint(v_coverpoint_a, v_coverpoint_b, v_coverpoint_c);
 
       ------------------------------------------------------------
       log(ID_LOG_HDR, "Testing illegal bins with single values");
@@ -886,8 +921,10 @@ begin
       ------------------------------------------------------------
       v_coverpoint_a.set_illegal_bin_alert_level(WARNING);
       v_coverpoint_b.set_illegal_bin_alert_level(WARNING);
+      v_coverpoint_c.set_illegal_bin_alert_level(WARNING);
       check_value(v_coverpoint_a.get_illegal_bin_alert_level(VOID) = WARNING, ERROR, "Checking illegal bin alert level");
       check_value(v_coverpoint_b.get_illegal_bin_alert_level(VOID) = WARNING, ERROR, "Checking illegal bin alert level");
+      check_value(v_coverpoint_c.get_illegal_bin_alert_level(VOID) = WARNING, ERROR, "Checking illegal bin alert level");
 
       v_coverpoint_a.add_bins(illegal_bin_transition((3201, 3203, 3201)));
       v_coverpoint_a.add_bins(illegal_bin_transition((3201, 3203, 3201, 3209)));
@@ -896,6 +933,8 @@ begin
       v_coverpoint_a.add_bins(illegal_bin_transition((3220, 3221, 3222, 3223, 3224, 3225, 3226, 3227, 3228, 3229, 3230))); -- C_FC_MAX_NUM_BIN_VALUES = 10
       v_coverpoint_b.add_bins(illegal_bin_transition(ANY, 2));
       v_coverpoint_b.add_bins(illegal_bin_transition(ANY, 3));
+      v_coverpoint_c.add_bins(illegal_bin_transition(ANY, 2), 1, 1, true); -- any value with 2 transitions should get a hit (allow overlap)
+      v_coverpoint_c.add_bins(illegal_bin_transition((441,442,441)), 1, 1, true); -- allow overlap
 
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3201, 3203, 3201));
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3201, 3203, 3201, 3209));
@@ -903,8 +942,10 @@ begin
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3220, 3221, 3222, 3223, 3224, 3225, 3226, 3227, 3228, 3229));
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_ILLEGAL, (1, 1));
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_ILLEGAL, (1, 1, 1));
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_ILLEGAL, (1, 1));
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_ILLEGAL, (441,442,441));
 
-      increment_expected_alerts(WARNING, 29);
+      increment_expected_alerts(WARNING, 35);
       sample_bins(v_coverpoint_a, (3201, 3203, 3201, 3209), 2);
       sample_bins(v_coverpoint_a, (3201, 3203, 3201, 3203, 3201, 3209), 2);
       sample_bins(v_coverpoint_a, (3201, 3203, 3201, 3203, 3201, 3203, 3201, 3209), 2);
@@ -914,17 +955,21 @@ begin
       sample_bins(v_coverpoint_a, (3210, 3210, 3210, 3218, 3215, 3214, 3210), 1); -- Sample values outside bins
       sample_bins(v_coverpoint_a, (3220, 3221, 3222, 3223, 3224, 3225, 3226, 3227, 3228, 3230), 1); -- Sample values outside bins
       sample_bins(v_coverpoint_b, (1, 1, 1, 1), 1);
+      sample_bins(v_coverpoint_c, (441, 442, 441, 442, 441), 1);
 
       v_invalid_bin_idx  := v_invalid_bin_idx - 4;
       v_invalid_bin_idx2 := v_invalid_bin_idx2 - 2;
+      v_invalid_bin_idx3 := v_invalid_bin_idx3 - 2;
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3201, 3203, 3201), hits => 12);
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3201, 3203, 3201, 3209), hits => 8);
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3210, 3210, 3210, 3218, 3215, 3215, 3210), hits => 3);
       check_invalid_bin(v_coverpoint_a, v_invalid_bin_idx, TRN_ILLEGAL, (3220, 3221, 3222, 3223, 3224, 3225, 3226, 3227, 3228, 3229), hits => 3);
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_ILLEGAL, (1, 1), hits => 2);
       check_invalid_bin(v_coverpoint_b, v_invalid_bin_idx2, TRN_ILLEGAL, (1, 1, 1), hits => 1);
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_ILLEGAL, (1, 1), hits => 4); 
+      check_invalid_bin(v_coverpoint_c, v_invalid_bin_idx3, TRN_ILLEGAL, (441,442,441), hits => 2);
 
-      delete_coverpoint(v_coverpoint_a, v_coverpoint_b);
+      delete_coverpoint(v_coverpoint_a, v_coverpoint_b, v_coverpoint_c);
 
       ------------------------------------------------------------
       log(ID_LOG_HDR, "Testing concatenation of bins");
