@@ -348,13 +348,14 @@ package func_cov_pkg is
     -- Add bins
     ------------------------------------------------------------
     procedure add_bins(
-      constant bin           : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      constant bin             : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_bins(
       constant bin           : in t_new_bin_array;
@@ -378,14 +379,15 @@ package func_cov_pkg is
     -- Add cross (2 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       constant bin1          : in t_new_bin_array;
@@ -412,15 +414,16 @@ package func_cov_pkg is
     -- Add cross (3 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant bin3          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant bin3            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       constant bin1          : in t_new_bin_array;
@@ -450,16 +453,17 @@ package func_cov_pkg is
     -- Add cross (4 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant bin3          : in t_new_bin_array;
-      constant bin4          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant bin3            : in t_new_bin_array;
+      constant bin4            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       constant bin1          : in t_new_bin_array;
@@ -492,17 +496,18 @@ package func_cov_pkg is
     -- Add cross (5 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant bin3          : in t_new_bin_array;
-      constant bin4          : in t_new_bin_array;
-      constant bin5          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant bin3            : in t_new_bin_array;
+      constant bin4            : in t_new_bin_array;
+      constant bin5            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       constant bin1          : in t_new_bin_array;
@@ -539,14 +544,15 @@ package func_cov_pkg is
     -- Add cross (2 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       variable coverpoint1   : inout t_coverpoint;
@@ -573,15 +579,16 @@ package func_cov_pkg is
     -- Add cross (3 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      variable coverpoint3   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      variable coverpoint3     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       variable coverpoint1   : inout t_coverpoint;
@@ -611,16 +618,17 @@ package func_cov_pkg is
     -- Add cross (4 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      variable coverpoint3   : inout t_coverpoint;
-      variable coverpoint4   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      variable coverpoint3     : inout t_coverpoint;
+      variable coverpoint4     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       variable coverpoint1   : inout t_coverpoint;
@@ -653,17 +661,18 @@ package func_cov_pkg is
     -- Add cross (5 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      variable coverpoint3   : inout t_coverpoint;
-      variable coverpoint4   : inout t_coverpoint;
-      variable coverpoint5   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "");
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      variable coverpoint3     : inout t_coverpoint;
+      variable coverpoint4     : inout t_coverpoint;
+      variable coverpoint5     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true);
 
     procedure add_cross(
       variable coverpoint1   : inout t_coverpoint;
@@ -2796,16 +2805,16 @@ package body func_cov_pkg is
     -- Add bins
     ------------------------------------------------------------
     procedure add_bins(
-      constant bin           : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      constant bin             : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL               : string  := "add_bins(" & get_proc_calls(bin) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS           : natural := 1;
-      constant C_USE_RAND_WEIGHT          : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call                : line;
       variable v_bin_array                : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                  : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -2818,7 +2827,7 @@ package body func_cov_pkg is
       check_num_bins_crossed(C_NUM_CROSS_BINS, v_proc_call.all);
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding bins: " & get_bin_array_values(bin) & ", min_hits:" & to_string(min_hits) &
-        ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) & ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
+        ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) & ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
       create_bin_array(v_proc_call.all, v_bin_array, bin);
@@ -2831,10 +2840,10 @@ package body func_cov_pkg is
           alert(TB_ERROR, C_LOCAL_CALL & "=> Unable to set a new value to the '" & bin_name & "' key.", priv_scope);
         end if;
 
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME);
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       vendor_add_bins(v_cur_priv_bin_idx, v_cur_priv_invalid_bin_idx);
@@ -2849,7 +2858,7 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_bins(" & get_proc_calls(bin) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_bins(bin, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_bins(bin, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_bins(
@@ -2859,7 +2868,7 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_bins(" & get_proc_calls(bin) & ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_bins(bin, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_bins(bin, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_bins(
@@ -2868,25 +2877,25 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_bins(" & get_proc_calls(bin) & ", """ & bin_name & """)";
     begin
-      add_bins(bin, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_bins(bin, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (2 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", min_hits:" & to_string(min_hits) &
                                                       ", rand_weight:" & to_string(rand_weight) & ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : natural := 2;
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -2897,7 +2906,7 @@ package body func_cov_pkg is
       check_num_bins_crossed(C_NUM_CROSS_BINS, v_proc_call.all);
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & get_bin_array_values(bin1) & " x " & get_bin_array_values(bin2) &
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -2912,10 +2921,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -2931,7 +2940,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", min_hits:" & to_string(min_hits) &
                                         ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -2943,7 +2952,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", min_hits:" & to_string(min_hits) &
                                         ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -2953,26 +2962,26 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (3 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant bin3          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant bin3            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                                       ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : natural := 3;
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -2983,7 +2992,7 @@ package body func_cov_pkg is
       check_num_bins_crossed(C_NUM_CROSS_BINS, v_proc_call.all);
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & get_bin_array_values(bin1) & " x " & get_bin_array_values(bin2) & " x " & get_bin_array_values(bin3) &
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -2998,10 +3007,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3018,7 +3027,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3031,7 +3040,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3043,28 +3052,28 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (4 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant bin3          : in t_new_bin_array;
-      constant bin4          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant bin3            : in t_new_bin_array;
+      constant bin4            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                                       ", " & get_proc_calls(bin4) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & 
                                                       ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : natural := 4;
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -3075,7 +3084,7 @@ package body func_cov_pkg is
       check_num_bins_crossed(C_NUM_CROSS_BINS, v_proc_call.all);
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & get_bin_array_values(bin1) & " x " & get_bin_array_values(bin2) & " x " & get_bin_array_values(bin3) & " x " & get_bin_array_values(bin4) &
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -3090,10 +3099,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3112,7 +3121,7 @@ package body func_cov_pkg is
                                         ", " & get_proc_calls(bin4) & ", min_hits:" & to_string(min_hits) & 
                                         ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, bin4, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, bin4, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3126,7 +3135,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", " & get_proc_calls(bin4) & ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, bin4, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, bin4, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3139,29 +3148,29 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", " & get_proc_calls(bin4) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, bin4, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, bin4, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (5 bins)
     ------------------------------------------------------------
     procedure add_cross(
-      constant bin1          : in t_new_bin_array;
-      constant bin2          : in t_new_bin_array;
-      constant bin3          : in t_new_bin_array;
-      constant bin4          : in t_new_bin_array;
-      constant bin5          : in t_new_bin_array;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      constant bin1            : in t_new_bin_array;
+      constant bin2            : in t_new_bin_array;
+      constant bin3            : in t_new_bin_array;
+      constant bin4            : in t_new_bin_array;
+      constant bin5            : in t_new_bin_array;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                                       ", " & get_proc_calls(bin4) & ", " & get_proc_calls(bin5) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & 
                                                       ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : natural := 5;
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -3173,7 +3182,7 @@ package body func_cov_pkg is
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & get_bin_array_values(bin1) & " x " & get_bin_array_values(bin2) & " x " & get_bin_array_values(bin3) &
         " x " & get_bin_array_values(bin4) & " x " & get_bin_array_values(bin5) &
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -3188,10 +3197,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3211,7 +3220,7 @@ package body func_cov_pkg is
                                         ", " & get_proc_calls(bin4) & ", " & get_proc_calls(bin5) & ", min_hits:" & to_string(min_hits) & 
                                         ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, bin4, bin5, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, bin4, bin5, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3226,7 +3235,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", " & get_proc_calls(bin4) & ", " & get_proc_calls(bin5) & ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, bin4, bin5, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, bin4, bin5, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3240,26 +3249,26 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & get_proc_calls(bin1) & ", " & get_proc_calls(bin2) & ", " & get_proc_calls(bin3) &
                                         ", " & get_proc_calls(bin4) & ", " & get_proc_calls(bin5) & ", """ & bin_name & """)";
     begin
-      add_cross(bin1, bin2, bin3, bin4, bin5, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(bin1, bin2, bin3, bin4, bin5, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (2 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) &
                                                       ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & 
                                                       ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : integer := coverpoint1.get_num_bins_crossed(VOID) + coverpoint2.get_num_bins_crossed(VOID);
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -3270,7 +3279,7 @@ package body func_cov_pkg is
       check_num_bins_crossed(C_NUM_CROSS_BINS, v_proc_call.all, coverpoint1.get_num_bins_crossed(VOID), coverpoint2.get_num_bins_crossed(VOID));
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & coverpoint1.get_all_bins_string(VOID) & " x " & coverpoint2.get_all_bins_string(VOID) &
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -3285,10 +3294,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3304,7 +3313,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", min_hits:" & to_string(min_hits) & 
                                         ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3315,7 +3324,7 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3325,27 +3334,27 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (3 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      variable coverpoint3   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      variable coverpoint3     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) &
                                                       ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & 
                                                       ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : integer := coverpoint1.get_num_bins_crossed(VOID) + coverpoint2.get_num_bins_crossed(VOID) + coverpoint3.get_num_bins_crossed(VOID);
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -3357,7 +3366,7 @@ package body func_cov_pkg is
                              coverpoint3.get_num_bins_crossed(VOID));
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & coverpoint1.get_all_bins_string(VOID) & " x " & coverpoint2.get_all_bins_string(VOID) & " x " & coverpoint3.get_all_bins_string(VOID) &
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -3372,10 +3381,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3392,7 +3401,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) &
                                         ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3405,7 +3414,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) &
                                         ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3416,28 +3425,28 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (4 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      variable coverpoint3   : inout t_coverpoint;
-      variable coverpoint4   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      variable coverpoint3     : inout t_coverpoint;
+      variable coverpoint4     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) &
                                                       ", " & coverpoint4.get_name(VOID) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & 
                                                       ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : integer := coverpoint1.get_num_bins_crossed(VOID) + coverpoint2.get_num_bins_crossed(VOID) + coverpoint3.get_num_bins_crossed(VOID) + coverpoint4.get_num_bins_crossed(VOID);
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -3449,7 +3458,7 @@ package body func_cov_pkg is
                              coverpoint3.get_num_bins_crossed(VOID), coverpoint4.get_num_bins_crossed(VOID));
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & coverpoint1.get_all_bins_string(VOID) & " x " & coverpoint2.get_all_bins_string(VOID) & " x " & coverpoint3.get_all_bins_string(VOID) &
-        " x " & coverpoint4.get_all_bins_string(VOID) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) &
+        " x " & coverpoint4.get_all_bins_string(VOID) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) &
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -3464,10 +3473,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3485,7 +3494,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) &
                                         ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3499,7 +3508,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) &
                                         ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3511,29 +3520,29 @@ package body func_cov_pkg is
       constant msg_id_panel : in t_msg_id_panel := shared_msg_id_panel) is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
     -- Add cross (5 coverpoints)
     ------------------------------------------------------------
     procedure add_cross(
-      variable coverpoint1   : inout t_coverpoint;
-      variable coverpoint2   : inout t_coverpoint;
-      variable coverpoint3   : inout t_coverpoint;
-      variable coverpoint4   : inout t_coverpoint;
-      variable coverpoint5   : inout t_coverpoint;
-      constant min_hits      : in positive;
-      constant rand_weight   : in natural;
-      constant allow_overlap : in boolean;
-      constant bin_name      : in string         := "";
-      constant msg_id_panel  : in t_msg_id_panel := shared_msg_id_panel;
-      constant ext_proc_call : in string         := "") is
+      variable coverpoint1     : inout t_coverpoint;
+      variable coverpoint2     : inout t_coverpoint;
+      variable coverpoint3     : inout t_coverpoint;
+      variable coverpoint4     : inout t_coverpoint;
+      variable coverpoint5     : inout t_coverpoint;
+      constant min_hits        : in positive;
+      constant rand_weight     : in natural;
+      constant allow_overlap   : in boolean;
+      constant bin_name        : in string         := "";
+      constant msg_id_panel    : in t_msg_id_panel := shared_msg_id_panel;
+      constant ext_proc_call   : in string         := "";
+      constant use_rand_weight : in boolean        := true) is
       constant C_LOCAL_CALL              : string  := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) &
                                                       ", " & coverpoint5.get_name(VOID) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & 
                                                       ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """)";
       constant C_NUM_CROSS_BINS          : integer := coverpoint1.get_num_bins_crossed(VOID) + coverpoint2.get_num_bins_crossed(VOID) + coverpoint3.get_num_bins_crossed(VOID) + coverpoint4.get_num_bins_crossed(VOID) + coverpoint5.get_num_bins_crossed(VOID);
-      constant C_USE_RAND_WEIGHT         : boolean := ext_proc_call = ""; -- When procedure is called from the sequencer
       variable v_proc_call               : line;
       variable v_bin_array               : t_new_bin_array(0 to C_NUM_CROSS_BINS - 1);
       variable v_idx_reg                 : integer_vector(0 to C_NUM_CROSS_BINS - 1);
@@ -3546,7 +3555,7 @@ package body func_cov_pkg is
       log(ID_FUNC_COV_BINS, get_name_prefix(VOID) & v_proc_call.all, priv_scope, msg_id_panel);
       log(ID_FUNC_COV_BINS_INFO, get_name_prefix(VOID) & "Adding cross: " & coverpoint1.get_all_bins_string(VOID) & " x " & coverpoint2.get_all_bins_string(VOID) &
         " x " & coverpoint3.get_all_bins_string(VOID) & " x " & coverpoint4.get_all_bins_string(VOID) & " x " & coverpoint5.get_all_bins_string(VOID) & 
-        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), C_USE_RAND_WEIGHT) & 
+        ", min_hits:" & to_string(min_hits) & ", rand_weight:" & return_string1_if_true_otherwise_string2(to_string(rand_weight), to_string(min_hits), use_rand_weight) & 
         ", allow_overlap:" & to_string(allow_overlap) & ", """ & bin_name & """", priv_scope, msg_id_panel);
 
       -- Copy the bins into an array and use a recursive procedure to add them to the list
@@ -3561,10 +3570,10 @@ package body func_cov_pkg is
         end if;
 
         append_bin_name_and_check(C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, C_FC_DEFAULT_BIN_NAME & to_string(v_default_bin_name_idx));
       else -- use the given bin name
         append_bin_name_and_check(bin_name);
-        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, C_USE_RAND_WEIGHT, bin_name);
+        add_bins_recursive(v_bin_array, 0, v_idx_reg, min_hits, rand_weight, allow_overlap, use_rand_weight, bin_name);
       end if;
 
       DEALLOCATE(v_proc_call);
@@ -3583,7 +3592,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) &
                                         ", " & coverpoint5.get_name(VOID) & ", min_hits:" & to_string(min_hits) & ", rand_weight:" & to_string(rand_weight) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, coverpoint5, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, coverpoint5, min_hits, rand_weight, false, bin_name, msg_id_panel, C_LOCAL_CALL, true);
     end procedure;
 
     procedure add_cross(
@@ -3598,7 +3607,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) &
                                         ", " & coverpoint5.get_name(VOID) & ", min_hits:" & to_string(min_hits) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, coverpoint5, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, coverpoint5, min_hits, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     procedure add_cross(
@@ -3612,7 +3621,7 @@ package body func_cov_pkg is
       constant C_LOCAL_CALL : string := "add_cross(" & coverpoint1.get_name(VOID) & ", " & coverpoint2.get_name(VOID) & ", " & coverpoint3.get_name(VOID) & ", " & coverpoint4.get_name(VOID) &
                                         ", " & coverpoint5.get_name(VOID) & ", """ & bin_name & """)";
     begin
-      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, coverpoint5, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL);
+      add_cross(coverpoint1, coverpoint2, coverpoint3, coverpoint4, coverpoint5, 1, 1, false, bin_name, msg_id_panel, C_LOCAL_CALL, false);
     end procedure;
 
     ------------------------------------------------------------
