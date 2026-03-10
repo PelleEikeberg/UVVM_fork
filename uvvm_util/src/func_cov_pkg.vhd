@@ -59,11 +59,13 @@ package func_cov_pkg is
   type t_rand_sample_cov is (SAMPLE_COV, NO_SAMPLE_COV);
   type t_new_bins_acceptance is (NO_ALERT_ON_NEW_BINS, WARNING_ON_NEW_BINS, ERROR_ON_NEW_BINS);
   type t_cov_bin_type is (VAL, VAL_IGNORE, VAL_ILLEGAL, RAN, RAN_IGNORE, RAN_ILLEGAL, TRN, TRN_IGNORE, TRN_ILLEGAL);
+  type t_trans_enum is (ANY, VOID); -- only ANY is supported per now
 
   type t_new_bin is record
     contains   : t_cov_bin_type;
     values     : integer_vector(0 to C_FC_MAX_NUM_BIN_VALUES - 1);
     num_values : natural range 0 to C_FC_MAX_NUM_BIN_VALUES;
+    allow_any  : boolean;
   end record;
   type t_new_bin_vector is array (natural range <>) of t_new_bin;
 
@@ -73,7 +75,7 @@ package func_cov_pkg is
     proc_call  : string(1 to C_FC_MAX_PROC_CALL_LENGTH);
   end record;
   type t_new_bin_array is array (natural range <>) of t_new_cov_bin;
-  constant C_EMPTY_NEW_BIN_ARRAY : t_new_bin_array(0 to 0) := (0 => ((0 to C_FC_MAX_NUM_NEW_BINS - 1 => (VAL, (others => 0), 0)),
+  constant C_EMPTY_NEW_BIN_ARRAY : t_new_bin_array(0 to 0) := (0 => ((0 to C_FC_MAX_NUM_NEW_BINS - 1 => (VAL, (others => 0), 0, false)),
                                                                      0,
                                                                      (1 to C_FC_MAX_PROC_CALL_LENGTH => NUL)));
 
@@ -81,6 +83,7 @@ package func_cov_pkg is
     contains   : t_cov_bin_type;
     values     : integer_vector(0 to C_FC_MAX_NUM_BIN_VALUES - 1);
     num_values : natural range 0 to C_FC_MAX_NUM_BIN_VALUES;
+    allow_any  : boolean;
   end record;
   type t_bin_vector is array (natural range <>) of t_bin;
 
@@ -129,6 +132,12 @@ package func_cov_pkg is
     constant set_of_values : integer_vector)
   return t_new_bin_array;
 
+  -- Creates a bin for a transition of values
+  impure function bin_transition(
+    constant any_enum : t_trans_enum;
+    constant any_num  : integer)
+  return t_new_bin_array;
+
   -- Creates an ignore bin for a single value
   impure function ignore_bin(
     constant value : integer)
@@ -145,6 +154,12 @@ package func_cov_pkg is
     constant set_of_values : integer_vector)
   return t_new_bin_array;
 
+  -- Creates an ignore bin for a transition of values
+  impure function ignore_bin_transition(
+    constant any_enum : t_trans_enum;
+    constant any_num  : integer)
+  return t_new_bin_array;
+
   -- Creates an illegal bin for a single value
   impure function illegal_bin(
     constant value : integer)
@@ -154,6 +169,12 @@ package func_cov_pkg is
   impure function illegal_bin_range(
     constant min_value : integer;
     constant max_value : integer)
+  return t_new_bin_array;
+
+  -- Creates an illegal bin for a transition of values
+  impure function illegal_bin_transition(
+    constant any_enum : t_trans_enum;
+    constant any_num  : integer)
   return t_new_bin_array;
 
   -- Creates an illegal bin for a transition of values
@@ -692,6 +713,7 @@ package body func_cov_pkg is
     v_ret(0).bin_vector(0).contains   := contains;
     v_ret(0).bin_vector(0).values(0)  := value;
     v_ret(0).bin_vector(0).num_values := 1;
+    v_ret(0).bin_vector(0).allow_any  := false;
     v_ret(0).num_bins                 := 1;
     if C_PROC_CALL_NORMALISED'length > C_FC_MAX_PROC_CALL_LENGTH then
       v_ret(0).proc_call := C_PROC_CALL_NORMALISED(1 to C_FC_MAX_PROC_CALL_LENGTH - 3) & "...";
@@ -705,19 +727,24 @@ package body func_cov_pkg is
   impure function create_bin_multiple(
     constant contains      : t_cov_bin_type;
     constant set_of_values : integer_vector;
+    constant any_value     : boolean;
     constant proc_call     : string)
   return t_new_bin_array is
     constant C_SET_OF_VALUES_NORMALISED : integer_vector(0 to set_of_values'length-1) := set_of_values;
     constant C_PROC_CALL_NORMALISED     : string(1 to proc_call'length) := proc_call;
     variable v_ret                      : t_new_bin_array(0 to 0);
   begin
-    v_ret(0).bin_vector(0).contains := contains;
+    v_ret(0).bin_vector(0).contains  := contains;
+    v_ret(0).bin_vector(0).allow_any := any_value;
+    log(ID_SEQUENCER, "creating bin with any_value := " & to_string(any_value));
     if C_SET_OF_VALUES_NORMALISED'length <= C_FC_MAX_NUM_BIN_VALUES then
       v_ret(0).bin_vector(0).values(0 to C_SET_OF_VALUES_NORMALISED'length - 1) := C_SET_OF_VALUES_NORMALISED;
       v_ret(0).bin_vector(0).num_values                                         := C_SET_OF_VALUES_NORMALISED'length;
+      v_ret(0).bin_vector(0).allow_any                                          := any_value;
     else
       v_ret(0).bin_vector(0).values     := C_SET_OF_VALUES_NORMALISED(0 to C_FC_MAX_NUM_BIN_VALUES - 1);
       v_ret(0).bin_vector(0).num_values := C_FC_MAX_NUM_BIN_VALUES;
+      v_ret(0).bin_vector(0).allow_any  := any_value;
       alert(TB_WARNING, C_PROC_CALL_NORMALISED & "=> Number of values (" & to_string(C_SET_OF_VALUES_NORMALISED'length) & ") exceeds C_FC_MAX_NUM_BIN_VALUES.\n Increase C_FC_MAX_NUM_BIN_VALUES in adaptations package.", C_TB_SCOPE_DEFAULT);
     end if;
     v_ret(0).num_bins               := 1;
@@ -762,6 +789,7 @@ package body func_cov_pkg is
                                                            VAL_ILLEGAL when contains = RAN_ILLEGAL;
           v_ret(0).bin_vector(i - min_value).values(0)  := i;
           v_ret(0).bin_vector(i - min_value).num_values := 1;
+          v_ret(0).bin_vector(i - min_value).allow_any  := false;
         end loop;
         v_num_bins := to_integer(C_RANGE_WIDTH);
       -- Create several bins by diving the range
@@ -785,6 +813,7 @@ package body func_cov_pkg is
           v_ret(0).bin_vector(i).values(0)  := min_value + to_integer(resize(v_div_range * i, 31)) + v_div_residue_min;
           v_ret(0).bin_vector(i).values(1)  := min_value + to_integer(resize(v_div_range * (i + 1) - 1, 31)) + v_div_residue_max;
           v_ret(0).bin_vector(i).num_values := 2;
+          v_ret(0).bin_vector(i).allow_any  := false;
         end loop;
       end if;
       v_ret(0).num_bins := v_num_bins;
@@ -818,7 +847,7 @@ package body func_cov_pkg is
   return t_new_bin_array is
     constant C_LOCAL_CALL : string := "bin(" & to_string(set_of_values) & ")";
   begin
-    return create_bin_multiple(VAL, set_of_values, C_LOCAL_CALL);
+    return create_bin_multiple(VAL, set_of_values, false, C_LOCAL_CALL);
   end function;
 
   -- Creates a bin for a range of values. Several bins can be created by dividing the range into num_bins.
@@ -851,11 +880,22 @@ package body func_cov_pkg is
 
   -- Creates a bin for a transition of values
   impure function bin_transition(
+    constant any_enum : t_trans_enum;
+    constant any_num  : integer)
+  return t_new_bin_array is
+    constant C_LOCAL_CALL     : string                         := "bin_transition(" & to_string(any_enum) & ", " & to_string(any_num) & ")";
+    constant C_INT_VEC_W_ONES : integer_vector(0 to any_num-1) := (others => 1);
+  begin
+    return create_bin_multiple(TRN, C_INT_VEC_W_ONES, true, C_LOCAL_CALL);
+  end function;
+
+  -- Creates a bin for a transition of values
+  impure function bin_transition(
     constant set_of_values : integer_vector)
   return t_new_bin_array is
     constant C_LOCAL_CALL : string := "bin_transition(" & to_string(set_of_values) & ")";
   begin
-    return create_bin_multiple(TRN, set_of_values, C_LOCAL_CALL);
+    return create_bin_multiple(TRN, set_of_values, false, C_LOCAL_CALL);
   end function;
 
   -- Creates an ignore bin for a single value
@@ -879,11 +919,22 @@ package body func_cov_pkg is
 
   -- Creates an ignore bin for a transition of values
   impure function ignore_bin_transition(
+    constant any_enum : t_trans_enum;
+    constant any_num  : integer)
+  return t_new_bin_array is
+    constant C_LOCAL_CALL     : string                         := "ignore_bin_transition(" & to_string(any_enum) & ", " & to_string(any_num) & ")";
+    constant C_INT_VEC_W_ONES : integer_vector(0 to any_num-1) := (others => 1);
+  begin
+    return create_bin_multiple(TRN_IGNORE, C_INT_VEC_W_ONES, true, C_LOCAL_CALL);
+  end function;
+
+  -- Creates an ignore bin for a transition of values
+  impure function ignore_bin_transition(
     constant set_of_values : integer_vector)
   return t_new_bin_array is
     constant C_LOCAL_CALL : string := "ignore_bin_transition(" & to_string(set_of_values) & ")";
   begin
-    return create_bin_multiple(TRN_IGNORE, set_of_values, C_LOCAL_CALL);
+    return create_bin_multiple(TRN_IGNORE, set_of_values, false, C_LOCAL_CALL);
   end function;
 
   -- Creates an illegal bin for a single value
@@ -907,11 +958,22 @@ package body func_cov_pkg is
 
   -- Creates an illegal bin for a transition of values
   impure function illegal_bin_transition(
+    constant any_enum : t_trans_enum;
+    constant any_num  : integer)
+  return t_new_bin_array is
+    constant C_LOCAL_CALL     : string                         := "illegal_bin_transition(" & to_string(any_enum) & ", " & to_string(any_num) & ")";
+    constant C_INT_VEC_W_ONES : integer_vector(0 to any_num-1) := (others => 1);
+  begin
+    return create_bin_multiple(TRN_ILLEGAL, C_INT_VEC_W_ONES, true, C_LOCAL_CALL);
+  end function;
+
+  -- Creates an illegal bin for a transition of values
+  impure function illegal_bin_transition(
     constant set_of_values : integer_vector)
   return t_new_bin_array is
     constant C_LOCAL_CALL : string := "illegal_bin_transition(" & to_string(set_of_values) & ")";
   begin
-    return create_bin_multiple(TRN_ILLEGAL, set_of_values, C_LOCAL_CALL);
+    return create_bin_multiple(TRN_ILLEGAL, set_of_values, false, C_LOCAL_CALL);
   end function;
 
   ------------------------------------------------------------
@@ -1187,12 +1249,17 @@ package body func_cov_pkg is
                 write(v_line, string'(return_bin_type("illegal_bin_transition", "ILL", bin_verbosity)));
               end if;
               write(v_line, '(');
-              for k in 0 to bin_array(i).bin_vector(j).num_values - 1 loop
-                write(v_line, to_string(bin_array(i).bin_vector(j).values(k)));
-                if k < bin_array(i).bin_vector(j).num_values - 1 then
-                  write(v_line, string'("->"));
-                end if;
-              end loop;
+              if bin_array(i).bin_vector(j).allow_any then
+                write(v_line, string'("ANY, "));
+                write(v_line, to_string(bin_array(i).bin_vector(j).num_values));
+              else
+                for k in 0 to bin_array(i).bin_vector(j).num_values - 1 loop
+                  write(v_line, to_string(bin_array(i).bin_vector(j).values(k)));
+                  if k < bin_array(i).bin_vector(j).num_values - 1 then
+                    write(v_line, string'("->"));
+                  end if;
+                end loop;
+              end if;
               write(v_line, ')');
           end case;
           if i < bin_array'length - 1 or j < bin_array(i).num_bins - 1 then
@@ -1229,6 +1296,7 @@ package body func_cov_pkg is
         v_new_bin_array(0).bin_vector(i).contains   := bin.cross_bins(i).contains;
         v_new_bin_array(0).bin_vector(i).values     := bin.cross_bins(i).values;
         v_new_bin_array(0).bin_vector(i).num_values := bin.cross_bins(i).num_values;
+        v_new_bin_array(0).bin_vector(i).allow_any  := bin.cross_bins(i).allow_any;
       end loop;
       v_new_bin_array(0).num_bins := priv_num_bins_crossed;
       -- Used in the report, so the bins in each vector are crossed
@@ -1251,6 +1319,7 @@ package body func_cov_pkg is
       v_new_bin_array(0).bin_vector(0).contains   := bin.contains;
       v_new_bin_array(0).bin_vector(0).values     := bin.values;
       v_new_bin_array(0).bin_vector(0).num_values := bin.num_values;
+      v_new_bin_array(0).bin_vector(0).allow_any  := bin.allow_any;
       v_new_bin_array(0).num_bins                 := 1;
       return get_bin_array_values(v_new_bin_array, LONG);
     end function;
@@ -1295,6 +1364,7 @@ package body func_cov_pkg is
         v_new_bin_array(0).bin_vector(i).contains   := bin.cross_bins(i).contains;
         v_new_bin_array(0).bin_vector(i).values     := bin.cross_bins(i).values;
         v_new_bin_array(0).bin_vector(i).num_values := bin.cross_bins(i).num_values;
+        v_new_bin_array(0).bin_vector(i).allow_any  := bin.cross_bins(i).allow_any;
       end loop;
       v_new_bin_array(0).num_bins := priv_num_bins_crossed;
       -- Used in the report, so the bins in each vector are crossed
@@ -1456,11 +1526,13 @@ package body func_cov_pkg is
       constant C_CONTAINS   : t_cov_bin_type                        := cov_bin_vector(cov_bin_idx).cross_bins(cross_bin_idx).contains;
       constant C_NUM_VALUES : natural                               := cov_bin_vector(cov_bin_idx).cross_bins(cross_bin_idx).num_values;
       constant C_VALUES     : integer_vector(0 to C_NUM_VALUES - 1) := cov_bin_vector(cov_bin_idx).cross_bins(cross_bin_idx).values(0 to C_NUM_VALUES - 1);
+      constant C_ALLOW_ANY  : boolean                               := cov_bin_vector(cov_bin_idx).cross_bins(cross_bin_idx).allow_any;
     begin
       for i in 0 to cov_bin_idx - 1 loop
         if cov_bin_vector(i).cross_bins(cross_bin_idx).contains = C_CONTAINS and
            cov_bin_vector(i).cross_bins(cross_bin_idx).num_values = C_NUM_VALUES and
-           cov_bin_vector(i).cross_bins(cross_bin_idx).values(0 to C_NUM_VALUES - 1) = C_VALUES
+           cov_bin_vector(i).cross_bins(cross_bin_idx).values(0 to C_NUM_VALUES - 1) = C_VALUES and
+           cov_bin_vector(i).cross_bins(cross_bin_idx).allow_any = C_ALLOW_ANY
         then
           return true;
         end if;
@@ -1508,6 +1580,7 @@ package body func_cov_pkg is
             bin_array(cross).bin_vector(v_num_bins).contains   := v_coverpoint_bins(i).cross_bins(cross).contains;
             bin_array(cross).bin_vector(v_num_bins).values     := v_coverpoint_bins(i).cross_bins(cross).values;
             bin_array(cross).bin_vector(v_num_bins).num_values := v_coverpoint_bins(i).cross_bins(cross).num_values;
+            bin_array(cross).bin_vector(v_num_bins).allow_any  := v_coverpoint_bins(i).cross_bins(cross).allow_any;
             v_num_bins                                         := v_num_bins + 1;
           end if;
         end loop;
@@ -1516,6 +1589,7 @@ package body func_cov_pkg is
             bin_array(cross).bin_vector(v_num_bins).contains   := v_coverpoint_invalid_bins(i).cross_bins(cross).contains;
             bin_array(cross).bin_vector(v_num_bins).values     := v_coverpoint_invalid_bins(i).cross_bins(cross).values;
             bin_array(cross).bin_vector(v_num_bins).num_values := v_coverpoint_invalid_bins(i).cross_bins(cross).num_values;
+            bin_array(cross).bin_vector(v_num_bins).allow_any  := v_coverpoint_invalid_bins(i).cross_bins(cross).allow_any;
             v_num_bins                                         := v_num_bins + 1;
           end if;
         end loop;
@@ -1762,6 +1836,7 @@ package body func_cov_pkg is
               priv_bins(priv_bins_idx).cross_bins(j).contains   := bin_array(j).bin_vector(idx_reg(j)).contains;
               priv_bins(priv_bins_idx).cross_bins(j).values     := bin_array(j).bin_vector(idx_reg(j)).values;
               priv_bins(priv_bins_idx).cross_bins(j).num_values := bin_array(j).bin_vector(idx_reg(j)).num_values;
+              priv_bins(priv_bins_idx).cross_bins(j).allow_any  := bin_array(j).bin_vector(idx_reg(j)).allow_any;
             end loop;
             priv_bins(priv_bins_idx).hits            := 0;
             priv_bins(priv_bins_idx).min_hits        := min_hits;
@@ -1798,6 +1873,7 @@ package body func_cov_pkg is
               priv_invalid_bins(priv_invalid_bins_idx).cross_bins(j).contains   := bin_array(j).bin_vector(idx_reg(j)).contains;
               priv_invalid_bins(priv_invalid_bins_idx).cross_bins(j).values     := bin_array(j).bin_vector(idx_reg(j)).values;
               priv_invalid_bins(priv_invalid_bins_idx).cross_bins(j).num_values := bin_array(j).bin_vector(idx_reg(j)).num_values;
+              priv_invalid_bins(priv_invalid_bins_idx).cross_bins(j).allow_any  := bin_array(j).bin_vector(idx_reg(j)).allow_any;
             end loop;
             priv_invalid_bins(priv_invalid_bins_idx).hits            := 0;
             priv_invalid_bins(priv_invalid_bins_idx).min_hits        := 0;
@@ -2573,6 +2649,7 @@ package body func_cov_pkg is
             v_new_bin_array(cross).bin_vector(v_num_bins).contains   := priv_bins(i).cross_bins(cross).contains;
             v_new_bin_array(cross).bin_vector(v_num_bins).values     := priv_bins(i).cross_bins(cross).values;
             v_new_bin_array(cross).bin_vector(v_num_bins).num_values := priv_bins(i).cross_bins(cross).num_values;
+            v_new_bin_array(cross).bin_vector(v_num_bins).allow_any  := priv_bins(i).cross_bins(cross).allow_any;
             v_num_bins                                               := v_num_bins + 1;
           end if;
         end loop;
@@ -2581,6 +2658,7 @@ package body func_cov_pkg is
             v_new_bin_array(cross).bin_vector(v_num_bins).contains   := priv_invalid_bins(i).cross_bins(cross).contains;
             v_new_bin_array(cross).bin_vector(v_num_bins).values     := priv_invalid_bins(i).cross_bins(cross).values;
             v_new_bin_array(cross).bin_vector(v_num_bins).num_values := priv_invalid_bins(i).cross_bins(cross).num_values;
+            v_new_bin_array(cross).bin_vector(v_num_bins).allow_any  := priv_invalid_bins(i).cross_bins(cross).allow_any;
             v_num_bins                                               := v_num_bins + 1;
           end if;
         end loop;
@@ -3431,13 +3509,21 @@ package body func_cov_pkg is
               v_bin_values.all       := priv_invalid_bins(i).cross_bins(j).values(0 to priv_invalid_bins(i).cross_bins(j).num_values - 1);
 
               -- Check if there are enough valid values in the shift register to compare the transition
-              if priv_invalid_bins(i).transition_mask(priv_invalid_bins(i).cross_bins(j).num_values - 1) = '1' and v_sample_shift_reg.all = v_bin_values.all then
-                v_value_match(j)    := '1';
-                v_illegal_match_idx := j when priv_invalid_bins(i).cross_bins(j).contains = TRN_ILLEGAL;
+              if priv_invalid_bins(i).transition_mask(priv_invalid_bins(i).cross_bins(j).num_values - 1) = '1' then
+                -- if the transition bin is created with "ANY", we just set the total transition to HIT regardless of value
+                if priv_invalid_bins(i).cross_bins(j).allow_any = true then
+                  v_value_match(j)    := '1';
+                  v_illegal_match_idx := j when priv_invalid_bins(i).cross_bins(j).contains = TRN_ILLEGAL;
+                elsif v_sample_shift_reg.all = v_bin_values.all then
+                  v_value_match(j)    := '1';
+                  v_illegal_match_idx := j when priv_invalid_bins(i).cross_bins(j).contains = TRN_ILLEGAL;
+                end if;
               end if;
 
               DEALLOCATE(v_sample_shift_reg);
               DEALLOCATE(v_bin_values);
+            when others =>
+              alert(TB_FAILURE, v_proc_call.all & "=> Unexpected error, invalid bin contains " & to_upper(to_string(priv_invalid_bins(i).cross_bins(j).contains)), priv_scope);
           end case;
         end loop;
 
@@ -3529,8 +3615,13 @@ package body func_cov_pkg is
                 v_bin_values.all       := priv_bins(i).cross_bins(j).values(0 to priv_bins(i).cross_bins(j).num_values - 1);
 
                 -- Check if there are enough valid values in the shift register to compare the transition
-                if priv_bins(i).transition_mask(priv_bins(i).cross_bins(j).num_values - 1) = '1' and v_sample_shift_reg.all = v_bin_values.all then
-                  v_value_match(j) := '1';
+                if priv_bins(i).transition_mask(priv_bins(i).cross_bins(j).num_values - 1) = '1' then
+                  -- if the transition bin is created with "ANY", we just set the total transition to HIT regardless of value
+                  if priv_bins(i).cross_bins(j).allow_any = true then
+                    v_value_match(j) := '1';
+                  elsif v_sample_shift_reg.all = v_bin_values.all then
+                    v_value_match(j) := '1';
+                  end if;
                 end if;
 
                 DEALLOCATE(v_sample_shift_reg);
